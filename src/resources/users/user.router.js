@@ -17,4 +17,9 @@ router.route('/').post(async (req, res) => {
   return res.json(User.toResponse(body));
 });
 
+router.route('/:id').put(async (req, res) => {
+  const user = await usersService.updateUser(req.params.id, req.body);
+  return res.json(User.toResponse(user));
+});
+
 module.exports = router;

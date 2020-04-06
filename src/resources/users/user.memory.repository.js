@@ -27,8 +27,21 @@ const createUser = async data => {
   return user;
 };
 
+const updateUser = async (id, user) => {
+  users.map(elem => {
+    if (elem.id === id) {
+      elem.name = user.name;
+      elem.login = user.login;
+      elem.password = user.password;
+    }
+    return elem;
+  });
+  return user;
+};
+
 module.exports = {
   getAll,
   getUserById,
-  createUser
+  createUser,
+  updateUser
 };
