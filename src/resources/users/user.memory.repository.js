@@ -1,17 +1,6 @@
 const User = require('./user.model.js');
 
-const users = [
-  {
-    id: '1',
-    name: 'Name1',
-    login: 'Login1'
-  },
-  {
-    id: '2',
-    name: 'Name2',
-    login: 'Login2'
-  }
-];
+const users = [];
 
 const getAll = async () => {
   return users;
