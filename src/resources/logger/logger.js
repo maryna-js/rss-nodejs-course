@@ -10,7 +10,7 @@ const logger = winston.createLogger({
 const requests = (req, res, next) => {
   const { url, params, body } = req;
   logger.log({
-    level: 'request',
+    level: 'info',
     date: new Date(),
     url,
     params,
