@@ -23,7 +23,7 @@ app.use('/', (req, res, next) => {
 
 app.use('/users', userRouter);
 app.use('/boards', boardRouter);
-app.use('/boards', taskRouter);
+app.use('/boards/:boardId/tasks', taskRouter);
 
 app.use((err, req, res, next) => {
   logger.error(`Error: ${err.message}`);
@@ -38,11 +38,5 @@ process.on('unhandledRejection', message => {
 process.on('uncaughtException', err => {
   logger.error(`Uncaught Exception: ${err.message}`);
 });
-
-// Crosscheck - расскоментируйте для проверки пункта 3 и 4
-
-// throw Error('Oops!');
-
-// Promise.reject(Error('Oops!'));
 
 module.exports = app;
