@@ -41,7 +41,7 @@ router.route('/:id').delete(
   error(async (req, res) => {
     const user = await usersService.deleteUser(req.params.id);
     if (user) {
-      res.status(204).send();
+      res.status(204).end();
     } else {
       res.status(404).end();
     }
