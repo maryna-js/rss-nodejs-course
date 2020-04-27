@@ -7,7 +7,7 @@ const getAll = async () => {
 };
 
 const getUserById = async id => {
-  return users.find(user => user.id === id);
+  return await users.find(user => user.id === id);
 };
 
 const createUser = async data => {

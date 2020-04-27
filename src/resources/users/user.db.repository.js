@@ -5,7 +5,11 @@ const getAll = async () => {
 };
 
 const getUserById = async id => {
-  return User.findOne({ _id: id });
+  return await User.findById(id);
+};
+
+const getByLogin = async login => {
+  return User.findOne({ login });
 };
 
 const createUser = async user => {
@@ -38,5 +42,6 @@ module.exports = {
   getUserById,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  getByLogin
 };

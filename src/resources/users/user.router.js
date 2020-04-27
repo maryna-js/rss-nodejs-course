@@ -2,6 +2,7 @@ const router = require('express').Router();
 const User = require('./user.model');
 const usersService = require('./user.service');
 const error = require('../logger/logger-error.js');
+const bcrypt = require('bcrypt');
 
 router.route('/').get(
   error(async (req, res) => {
@@ -22,8 +23,13 @@ router.route('/:id').get(
 
 router.route('/').post(
   error(async (req, res) => {
-    const body = await usersService.createUser(req.body);
-    return res.json(User.toResponse(body));
+    bcrypt.hash(req.body.password, 10).then(async hash => {
+      const user = await usersService.createUser({
+        ...req.body,
+        password: hash
+      });
+      return res.json(User.toResponse(user));
+    });
   })
 );
 
