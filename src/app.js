@@ -5,14 +5,16 @@ const YAML = require('yamljs');
 const userRouter = require('./resources/users/user.router');
 const boardRouter = require('./resources/boards/board.router');
 const taskRouter = require('./resources/tasks/task.router');
+const loginRouter = require('./resources/login/login.router');
+const logger = require('./resources/logger/logger');
+const checkToken = require('./resources/logger/checkToken');
 const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
-const logger = require('./resources/logger/logger');
 
 app.use(express.json());
 
 app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
-app.use('*', logger.requests);
+app.use('/', logger.requests);
 app.use('/', (req, res, next) => {
   if (req.originalUrl === '/') {
     res.send('Service is running!');
@@ -21,9 +23,10 @@ app.use('/', (req, res, next) => {
   next();
 });
 
-app.use('/users', userRouter);
-app.use('/boards', boardRouter);
-app.use('/boards/:boardId/tasks', taskRouter);
+app.use('/users', checkToken, userRouter);
+app.use('/boards', checkToken, boardRouter);
+app.use('/boards/:boardId/tasks', checkToken, taskRouter);
+app.use('/login', loginRouter);
 
 app.use((err, req, res, next) => {
   logger.error(`Error: ${err.message}`);
